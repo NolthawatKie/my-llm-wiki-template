@@ -1,6 +1,6 @@
 # second-brain
 
-A personal knowledge base for the **AI/LLM Engineer learning path**,
+A personal knowledge,
 built on the LLM Wiki pattern by Andrej Karpathy.
 
 > Obsidian is the IDE. The LLM is the programmer. The wiki is the codebase.
