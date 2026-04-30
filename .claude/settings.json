@@ -1,0 +1,34 @@
+{
+  "model": "claude-sonnet-4-6",
+
+  "permissions": {
+    "allow": [
+      "Read(raw/**)",
+      "Read(wiki/**)",
+      "Read(staging/reviewed/**)",
+      "Read(.claude/**)",
+      "Write(wiki/**)",
+      "Write(output/**)",
+      "Write(staging/inbox/**)"
+    ],
+    "deny": [
+      "Write(raw/**)",
+      "Write(staging/reviewed/**)"
+    ]
+  },
+
+  "env": {
+    "SLASH_COMMAND_TOOL_CHAR_BUDGET": "16000"
+  },
+
+  "context": {
+    "always_load": [
+      ".claude/CLAUDE.md",
+      "wiki/index.md",
+      "wiki/cache/hot/"
+    ],
+    "session_start_load": [
+      "wiki/memory/sessions/latest.md"
+    ]
+  }
+}

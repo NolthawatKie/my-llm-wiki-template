@@ -1,0 +1,60 @@
+# =============================================================================
+# .gitignore — second-brain template repo
+#
+# Rule: commit all template files (skills, agents, hooks, wiki skeleton).
+#       Ignore machine-specific state and user-generated vault content.
+# =============================================================================
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Obsidian vault config (machine-specific, auto-generated on vault open)
+.obsidian/
+
+# Claude Code user-specific session config (never commit)
+.claude/settings.local.json
+
+# =============================================================================
+# If someone uses this repo directly as their vault (instead of running
+# install.sh), ignore their personal content but preserve .gitkeep markers.
+# =============================================================================
+
+# Staging inbox — personal notes, never commit
+staging/inbox/*
+!staging/inbox/.gitkeep
+
+# Raw layer — source files can be large/private
+raw/sources/*
+!raw/sources/.gitkeep
+raw/data/*
+!raw/data/.gitkeep
+raw/code/*
+!raw/code/.gitkeep
+raw/notes/*
+!raw/notes/.gitkeep
+raw/_archived/*
+!raw/_archived/.gitkeep
+
+# Wiki generated content — agent-written, not template
+wiki/concepts/*
+!wiki/concepts/.gitkeep
+wiki/entities/*
+!wiki/entities/.gitkeep
+wiki/synthesis/*
+!wiki/synthesis/.gitkeep
+wiki/sources/*
+!wiki/sources/.gitkeep
+wiki/cache/hot/*
+!wiki/cache/hot/.gitkeep
+wiki/memory/answers/*
+!wiki/memory/answers/.gitkeep
+wiki/memory/sessions/archive/*
+!wiki/memory/sessions/archive/.gitkeep
+wiki/memory/sessions/YYYY-MM-DD.md
+wiki/_archived/sources/*
+!wiki/_archived/sources/.gitkeep
+
+# Output artifacts — generated on demand
+output/*
+!output/.gitkeep
