@@ -9,12 +9,12 @@ built on the LLM Wiki pattern by Andrej Karpathy.
 
 ## How It Works
 
-| layer | who writes | who reads | purpose |
-|---|---|---|---|
-| `raw/` | human | agent (read-only) | immutable source of truth |
-| `staging/` | human | human | personal notes in progress |
-| `wiki/` | agent | human | compiled, interlinked knowledge base |
-| `output/` | agent | human | generated artifacts on request |
+| layer      | who writes | who reads         | purpose                              |
+| ---------- | ---------- | ----------------- | ------------------------------------ |
+| `raw/`     | human      | agent (read-only) | immutable source of truth            |
+| `staging/` | human      | human             | personal notes in progress           |
+| `wiki/`    | agent      | human             | compiled, interlinked knowledge base |
+| `output/`  | agent      | human             | generated artifacts on request       |
 
 Sources go in. The LLM reads them, extracts what matters, and builds up a structured wiki of concepts, entities, and syntheses — with cross-references already in place. Nothing gets re-derived from scratch on every question. The wiki compounds.
 
@@ -24,12 +24,12 @@ Sources go in. The LLM reads them, extracts what matters, and builds up a struct
 
 ```bash
 # 1. Clone and initialise
-git clone <repo> my-second-brain
-cd my-second-brain
-bash init.sh
+git clone https://github.com/NolthawatKie/my-llm-wiki-template.git
+cd my-llm-wiki-template
+bash install.sh
 
 # 2. Open in Obsidian
-# File → Open Vault → select the my-second-brain folder
+# File → Open Vault → select the my-llm-wiki-template folder
 
 # 3. Start Claude Code
 claude
@@ -44,7 +44,7 @@ claude
 ## Directory Structure
 
 ```
-my-second-brain/
+my-llm-wiki-template/
 ├── .claude/               Claude Code config
 │   ├── CLAUDE.md          Vault rules and conventions
 │   ├── settings.json      Model, permissions, context loading
@@ -87,12 +87,14 @@ my-second-brain/
 ## Workflows
 
 ### Add a web article
+
 ```
 1. Use Obsidian Web Clipper → clips to raw/sources/
 2. /ingest raw/sources/<article>.md
 ```
 
 ### Add a personal note
+
 ```
 1. Write in staging/inbox/ (freeform)
 2. Review in Obsidian
@@ -102,18 +104,21 @@ my-second-brain/
 ```
 
 ### Weekly maintenance
+
 ```
 /lint          → find structural issues
 /gap-check     → update study queue
 ```
 
 ### Ask a question
+
 ```
 Just ask Claude in the session.
 Answers are cached to wiki/memory/answers/ automatically.
 ```
 
 ### Generate an artifact
+
 ```
 "Write a summary of everything I know about RLHF as a markdown report"
 "Create a comparison table of LoRA vs QLoRA vs full fine-tuning"
@@ -124,26 +129,26 @@ Answers are cached to wiki/memory/answers/ automatically.
 
 ## Available Commands
 
-| command | description |
-|---|---|
-| `/ingest [file]` | Ingest a source into the wiki |
-| `/promote [file]` | Promote a staged note to raw/ |
-| `/lint` | Health-check the wiki |
-| `/gap-check` | Analyse knowledge gaps and update study queue |
-| `/archive [file]` | Archive a wiki page or source |
-| `/restore [file]` | Restore an archived file |
-| `/add-gap [topic]` | Manually flag a knowledge gap |
+| command            | description                                   |
+| ------------------ | --------------------------------------------- |
+| `/ingest [file]`   | Ingest a source into the wiki                 |
+| `/promote [file]`  | Promote a staged note to raw/                 |
+| `/lint`            | Health-check the wiki                         |
+| `/gap-check`       | Analyse knowledge gaps and update study queue |
+| `/archive [file]`  | Archive a wiki page or source                 |
+| `/restore [file]`  | Restore an archived file                      |
+| `/add-gap [topic]` | Manually flag a knowledge gap                 |
 
 ---
 
 ## Subagents
 
-| agent | model | role |
-|---|---|---|
-| ingest-agent | haiku-4-5 | read source → write wiki pages |
+| agent         | model      | role                               |
+| ------------- | ---------- | ---------------------------------- |
+| ingest-agent  | haiku-4-5  | read source → write wiki pages     |
 | compile-agent | sonnet-4-6 | dedup, cross-ref, consistency pass |
-| lint-agent | haiku-4-5 | structural health scan (read-only) |
-| gap-agent | sonnet-4-6 | score gaps, build study queue |
+| lint-agent    | haiku-4-5  | structural health scan (read-only) |
+| gap-agent     | sonnet-4-6 | score gaps, build study queue      |
 
 ---
 

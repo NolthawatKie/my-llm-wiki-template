@@ -1,4 +1,5 @@
 # CLAUDE.md
+
 > Configuration for Claude Code — second brain vault
 > Last updated: 2026-04-28
 
@@ -6,31 +7,31 @@
 
 ## Purpose
 
-This vault is a **second brain for the AI/LLM Engineer learning path**,
+This vault is a **second brain for your knowledge based**,
 based on Andrej Karpathy's concept: Obsidian is the IDE, LLM is the programmer, wiki is the codebase.
 
 ---
 
 ## Layer Rules
 
-| layer | owner | rule |
-|---|---|---|
-| `raw/` | human | **immutable** — agent reads only, NEVER edits or deletes |
+| layer      | owner | rule                                                       |
+| ---------- | ----- | ---------------------------------------------------------- |
+| `raw/`     | human | **immutable** — agent reads only, NEVER edits or deletes   |
 | `staging/` | human | human writes, human reviews, human promotes via `/promote` |
-| `wiki/` | agent | agent writes and maintains, human reads |
-| `output/` | agent | agent writes on explicit request only |
+| `wiki/`    | agent | agent writes and maintains, human reads                    |
+| `output/`  | agent | agent writes on explicit request only                      |
 
 ---
 
 ## Source Ingestion Paths
 
-| source type | destination | method |
-|---|---|---|
-| Web Clipper | `raw/sources/` | direct (trusted) |
-| PDF / paper | `raw/sources/` | manual drop |
-| Personal note | `staging/inbox/` → `raw/notes/` | `/promote` |
-| Experiment data | `raw/data/` | manual |
-| Code / notebook | `raw/code/` | manual |
+| source type     | destination                     | method           |
+| --------------- | ------------------------------- | ---------------- |
+| Web Clipper     | `raw/sources/`                  | direct (trusted) |
+| PDF / paper     | `raw/sources/`                  | manual drop      |
+| Personal note   | `staging/inbox/` → `raw/notes/` | `/promote`       |
+| Experiment data | `raw/data/`                     | manual           |
+| Code / notebook | `raw/code/`                     | manual           |
 
 ---
 
@@ -47,6 +48,7 @@ based on Andrej Karpathy's concept: Obsidian is the IDE, LLM is the programmer, 
 ## Wiki Conventions
 
 ### Frontmatter (every page)
+
 ```yaml
 ---
 title: <page title>
@@ -59,12 +61,14 @@ tags: []
 ```
 
 ### Entity Types
+
 - `person` — researcher, author, project owner
 - `tool` — framework, library, platform
 - `org` — company, lab, institution
 - `paper` — research paper, technical report
 
 ### Concept Page Sections
+
 ```
 ## Definition
 ## Key Properties
@@ -74,6 +78,7 @@ tags: []
 ```
 
 ### Wikilinks
+
 Always use `[[page-name]]` — never use relative path markdown links inside the wiki.
 
 ---
@@ -96,6 +101,7 @@ YYYY-MM-DD HH:MM | action | files_affected | skill/agent
 ```
 
 Example:
+
 ```
 2026-04-28 14:32 | ingest | wiki/sources/attention-is-all-you-need.md, wiki/entities/transformer.md | ingest-agent
 2026-04-28 15:10 | lint   | wiki/concepts/rlhf.md                                                  | lint-agent
@@ -107,36 +113,36 @@ Example:
 
 ### User-invoked (called manually by typing a command)
 
-| skill | command | description |
-|---|---|---|
-| ingest | `/ingest [file]` | read source → create wiki pages → update index |
-| promote | `/promote [file]` | staging/reviewed/ → raw/notes/ (requires human confirmation) |
-| lint | `/lint` | scan wiki for orphans, contradictions, stale content |
-| gap-check | `/gap-check` | analyze knowledge gaps → update study-queue.md |
-| archive | `/archive [file]` | move to _archived/, flag inbound links |
-| restore | `/restore [file]` | move back from _archived/ |
-| add-gap | `/add-gap [topic]` | add a new gap entry to gaps/list.md |
+| skill     | command            | description                                                  |
+| --------- | ------------------ | ------------------------------------------------------------ |
+| ingest    | `/ingest [file]`   | read source → create wiki pages → update index               |
+| promote   | `/promote [file]`  | staging/reviewed/ → raw/notes/ (requires human confirmation) |
+| lint      | `/lint`            | scan wiki for orphans, contradictions, stale content         |
+| gap-check | `/gap-check`       | analyze knowledge gaps → update study-queue.md               |
+| archive   | `/archive [file]`  | move to \_archived/, flag inbound links                      |
+| restore   | `/restore [file]`  | move back from \_archived/                                   |
+| add-gap   | `/add-gap [topic]` | add a new gap entry to gaps/list.md                          |
 
 ### Auto-invoked (called by Claude when triggered)
 
-| skill | trigger |
-|---|---|
-| `summarize` | during ingest |
-| `extract-entities` | after summarize |
-| `update-index` | on every write to wiki/** |
-| `score-access` | at session end |
-| `write-answer-cache` | after Q&A synthesis |
+| skill                | trigger                     |
+| -------------------- | --------------------------- |
+| `summarize`          | during ingest               |
+| `extract-entities`   | after summarize             |
+| `update-index`       | on every write to wiki/\*\* |
+| `score-access`       | at session end              |
+| `write-answer-cache` | after Q&A synthesis         |
 
 ---
 
 ## Subagents
 
-| agent | model | purpose |
-|---|---|---|
-| `ingest-agent` | `claude-haiku-4-5-20251001` | structured read+write, no deep judgment |
-| `compile-agent` | `claude-sonnet-4-6` | dedup entities, cross-ref quality |
-| `lint-agent` | `claude-haiku-4-5-20251001` | pattern matching, file scan |
-| `gap-agent` | `claude-sonnet-4-6` | score + prioritize gaps |
+| agent           | model                       | purpose                                 |
+| --------------- | --------------------------- | --------------------------------------- |
+| `ingest-agent`  | `claude-haiku-4-5-20251001` | structured read+write, no deep judgment |
+| `compile-agent` | `claude-sonnet-4-6`         | dedup entities, cross-ref quality       |
+| `lint-agent`    | `claude-haiku-4-5-20251001` | pattern matching, file scan             |
+| `gap-agent`     | `claude-sonnet-4-6`         | score + prioritize gaps                 |
 
 > All agents run context-isolated — they return results only and never load `raw/` into the main context.
 
@@ -144,10 +150,10 @@ Example:
 
 ## Hooks
 
-| hook | trigger | action |
-|---|---|---|
-| `post-session` | session end | digest → sessions/, rebuild hot cache, evict stale |
-| `on-write-wiki` | Write(`wiki/**`) | call `update-index` (excludes index.md, log.md) |
+| hook            | trigger          | action                                             |
+| --------------- | ---------------- | -------------------------------------------------- |
+| `post-session`  | session end      | digest → sessions/, rebuild hot cache, evict stale |
+| `on-write-wiki` | Write(`wiki/**`) | call `update-index` (excludes index.md, log.md)    |
 
 ---
 
@@ -183,14 +189,14 @@ When a session is ending, follow these steps in order:
 
 ## Vault Splitting Policy
 
-| situation | split vault? |
-|---|---|
-| Multiple topics that can be cross-linked | No |
-| Work / client / privacy concerns | Yes |
-| Personal + work mixed | Yes |
-| Topics with zero overlap | Optional |
-| Short-lived project | Yes, then archive the vault |
-| Collaboration required | Yes |
+| situation                                | split vault?                |
+| ---------------------------------------- | --------------------------- |
+| Multiple topics that can be cross-linked | No                          |
+| Work / client / privacy concerns         | Yes                         |
+| Personal + work mixed                    | Yes                         |
+| Topics with zero overlap                 | Optional                    |
+| Short-lived project                      | Yes, then archive the vault |
+| Collaboration required                   | Yes                         |
 
 ---
 
