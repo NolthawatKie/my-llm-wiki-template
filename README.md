@@ -22,30 +22,45 @@ Sources go in. The LLM reads them, extracts what matters, and builds up a struct
 
 ## Quick Start
 
+**Option A: Install to a new directory (recommended)**
+
 ```bash
-# 1. Clone and initialise
+# 1. Clone the template
 git clone https://github.com/NolthawatKie/my-llm-wiki-template.git
 cd my-llm-wiki-template
 
-# 2. Cut the connection to upstream (IMPORTANT!)
-git remote remove origin
-# Then create your own repo on GitHub and add it:
-# git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO-NAME.git
-# git push -u origin main
+# 2. Create your vault in a new location
+# Replace ~/my-vaults/my-second-brain with your desired path
+bash install.sh ~/my-vaults/my-second-brain
 
-# 3. Run install
-bash install.sh
+# This will:
+#   - Copy .claude/ config, hooks, skills, agents
+#   - Create all empty directories with .gitkeep
+#   - Initialize a fresh git repo for your vault
+#   - Print the path where your vault is ready
 
-# 4. Open in Obsidian
-# File → Open Vault → select the my-llm-wiki-template folder
+# 3. Open your vault in Obsidian
+# File → Open Vault → select: ~/my-vaults/my-second-brain
 
-# 5. Start Claude Code
+# 4. Start Claude Code inside your vault
+cd ~/my-vaults/my-second-brain
 claude
+
+# 5. Edit your learning roadmap
+# wiki/gaps/roadmap.md
 
 # 6. Drop a source and ingest it
 # (copy an article to raw/sources/, or use Obsidian Web Clipper)
 /ingest raw/sources/my-article.md
 ```
+
+**Option B: Use the template directly (if you cloned this repo)**
+
+If you've already cloned this repo and want to use it as your vault:
+1. `git remote remove origin` — disconnect from upstream
+2. Create your own GitHub repo and push to it
+3. Use `/ingest`, `/promote`, and other commands directly
+4. Remember: your personal content (in `raw/` and `wiki/`) won't be committed due to `.gitignore`
 
 ---
 
