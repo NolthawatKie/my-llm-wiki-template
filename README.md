@@ -26,15 +26,23 @@ Sources go in. The LLM reads them, extracts what matters, and builds up a struct
 # 1. Clone and initialise
 git clone https://github.com/NolthawatKie/my-llm-wiki-template.git
 cd my-llm-wiki-template
+
+# 2. Cut the connection to upstream (IMPORTANT!)
+git remote remove origin
+# Then create your own repo on GitHub and add it:
+# git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO-NAME.git
+# git push -u origin main
+
+# 3. Run install
 bash install.sh
 
-# 2. Open in Obsidian
+# 4. Open in Obsidian
 # File → Open Vault → select the my-llm-wiki-template folder
 
-# 3. Start Claude Code
+# 5. Start Claude Code
 claude
 
-# 4. Drop a source and ingest it
+# 6. Drop a source and ingest it
 # (copy an article to raw/sources/, or use Obsidian Web Clipper)
 /ingest raw/sources/my-article.md
 ```
