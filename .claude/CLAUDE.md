@@ -1,7 +1,13 @@
 # CLAUDE.md
 
 > Configuration for Claude Code — second brain vault
-> Last updated: 2026-04-28
+> Last updated: 2026-05-04
+
+## Answer Behavior
+
+- When the user asks any question, **always search the vault first** before answering from training knowledge.
+- If the vault has relevant content, answer from vault and cite the wiki page.
+- If the vault has no relevant content, answer from training knowledge and say so explicitly.
 
 ---
 
